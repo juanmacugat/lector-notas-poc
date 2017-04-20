@@ -9,39 +9,42 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
-import dds.utn.frba.controller.AuthenticationController;
 import dds.utn.frba.model.Student;
+import dds.utn.frba.service.NotitasServiceRest;
 import dds.utn.frba.ui.vm.Token;
 
 public class AuthenticationWindow extends SimpleWindow<Token> {
-
-	private AuthenticationController auth = new AuthenticationController();
 
 	public AuthenticationWindow(WindowOwner owner) {
 		super(owner, new Token());
 	}
 
 	public void authenticate() {
-		Student student = auth.authenticate(this.getModelObject().getToken());
-		student.setToken(this.getModelObject().getToken());
+		String token = this.getModelObject().getToken();
+		NotitasServiceRest notitasService = NotitasServiceRest.getInstance(token);
+		Student student = notitasService.getStudent();
+		student.setToken(token);
+
 		Dialog<?> dialog = new StudentWindow(this, student);
 		dialog.open();
-		dialog.onAccept(() -> {});
+		dialog.onAccept(() -> {
+		});
 	}
 
 	@Override
 	protected void addActions(Panel actionsPanel) {
 		new Button(actionsPanel).setCaption("Ingresar").onClick(() -> {
 			this.authenticate();
-		});
+		}).setWidth(600);
 	}
 
 	@Override
 	protected void createFormPanel(Panel mainPanel) {
 		this.setTitle("Sistema de Notas");
 		mainPanel.setLayout(new VerticalLayout());
+		mainPanel.setWidth(600);
 		new Label(mainPanel).setText("Ingrese el token");
-		new TextBox(mainPanel).bindValueToProperty("token");
+		new TextBox(mainPanel).setWidth(600).bindValueToProperty("token");
 	}
 
 }
