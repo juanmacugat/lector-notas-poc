@@ -5,9 +5,8 @@ import java.util.List;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
-import org.uqbar.arena.widgets.tables.Column;
-import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
@@ -41,20 +40,24 @@ public class StudentWindow extends Dialog<Student> {
 		this.getModelObject().setAssignments(assignments);
 		
 		Panel rightPanel = new Panel(form);		
-		Table<Assignment> tableAssignments = new Table<Assignment>(rightPanel, Assignment.class);
-		tableAssignments.bindItemsToProperty("assignments");
-		tableAssignments.bindValueToProperty("assignments");
-		Column<Assignment> columnaID = new Column<Assignment>(tableAssignments);
-		columnaID.setTitle("ID");
-		columnaID.bindContentsToProperty("id");
+//		Table<Assignment> tableAssignments = new Table<Assignment>(rightPanel, Assignment.class);
+//		tableAssignments.bindItemsToProperty("assignments");
+//		tableAssignments.bindValueToProperty("assignments");
+//		Column<Assignment> columnaID = new Column<Assignment>(tableAssignments);
+//		columnaID.setTitle("ID");
+//		columnaID.bindContentsToProperty("id");
+//		
+//		Column<Assignment> columnaTitle = new Column<Assignment>(tableAssignments);
+//		columnaTitle.setTitle("Titulo");
+//		columnaTitle.bindContentsToProperty("title");
+//		
+//		Column<Assignment> columnaDescription = new Column<Assignment>(tableAssignments);
+//		columnaDescription.setTitle("Description");
+//		columnaDescription.bindContentsToProperty("description");
 		
-		Column<Assignment> columnaTitle = new Column<Assignment>(tableAssignments);
-		columnaTitle.setTitle("Titulo");
-		columnaTitle.bindContentsToProperty("title");
-		
-		Column<Assignment> columnaDescription = new Column<Assignment>(tableAssignments);
-		columnaDescription.setTitle("Description");
-		columnaDescription.bindContentsToProperty("description");
+		Selector<Assignment> selectorAssignment = new Selector<Assignment>(rightPanel).allowNull(true);
+		selectorAssignment.bindItemsToProperty("assignments");
+		selectorAssignment.bindValueToProperty("assignments");
 	}
 
 }
