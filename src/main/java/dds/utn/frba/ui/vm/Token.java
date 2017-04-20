@@ -5,10 +5,9 @@ import org.uqbar.commons.utils.Observable;
 import dds.utn.frba.model.Student;
 
 @Observable
-public class SessionViewModel {
+public class Token {
 
 	private String token;
-	private Student currentStudent;
 
 	public String getToken() {
 		return token;
@@ -16,14 +15,6 @@ public class SessionViewModel {
 
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	public Student getCurrentStudent() {
-		return currentStudent;
-	}
-
-	public void setCurrentStudent(Student currentStudent) {
-		this.currentStudent = currentStudent;
 	}
 
 }

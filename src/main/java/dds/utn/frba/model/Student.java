@@ -2,8 +2,11 @@ package dds.utn.frba.model;
 
 import java.util.List;
 
+import org.uqbar.commons.utils.Observable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Observable
 public class Student {
 
 	@JsonProperty("code")
@@ -14,7 +17,18 @@ public class Student {
 	private String last_name;
 	@JsonProperty("github_user")
 	private String github_user;
+	@JsonProperty("assignments")
 	private List<Assignment> assignments;
+	
+	private String token;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public List<Assignment> getAssignments() {
 		return assignments;

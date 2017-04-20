@@ -3,6 +3,7 @@ package dds.utn.frba.utils;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,6 +36,17 @@ public class JsonFactory {
 
 			throw new RuntimeException("Error reading a json", e);
 		}
+	}
+
+	public <T> T fromJson(final TypeReference<T> type, final String jsonPacket) {
+		T data = null;
+
+		try {
+			data = new ObjectMapper().readValue(jsonPacket, type);
+		} catch (Exception e) {
+			System.out.println("Hola");
+		}
+		return data;
 	}
 
 }
