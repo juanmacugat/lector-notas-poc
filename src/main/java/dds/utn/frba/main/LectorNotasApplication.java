@@ -3,7 +3,7 @@ package dds.utn.frba.main;
 import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
 
-import dds.utn.frba.ui.windows.AuthenticationWindow;
+import dds.utn.frba.ui.windows.LoginWindow;
 
 public class LectorNotasApplication extends Application {
 
@@ -13,7 +13,7 @@ public class LectorNotasApplication extends Application {
 
 	@Override
 	protected Window<?> createMainWindow() {
-		return new AuthenticationWindow(this);
+		return new LoginWindow(this);
 	}
 
 }

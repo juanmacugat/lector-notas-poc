@@ -3,6 +3,8 @@ package dds.utn.frba.ui.windows;
 import java.util.List;
 
 import org.uqbar.arena.layout.ColumnLayout;
+import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
@@ -14,7 +16,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import dds.utn.frba.model.Assignment;
 import dds.utn.frba.model.Student;
 import dds.utn.frba.service.NotitasService;
-import dds.utn.frba.service.NotitasServiceRest;
+import dds.utn.frba.service.NotitasServiceMock;
 
 public class StudentWindow extends Dialog<Student> {
 
@@ -26,19 +28,22 @@ public class StudentWindow extends Dialog<Student> {
 	protected void createFormPanel(Panel mainPanel) {
 
 		Panel first = new Panel(mainPanel);
-		first.setLayout(new ColumnLayout(2));
-		new Label(first).setText("Legajo:").setWidth(100);
-		new TextBox(first).setWidth(100).bindValueToProperty("code");
-		new Label(first).setText("Nombre:").setWidth(100);
-		new TextBox(first).setWidth(100).bindValueToProperty("first_name");
-		new Label(first).setText("Apellido:").setWidth(100);
-		new TextBox(first).setWidth(100).bindValueToProperty("last_name");
-		new Label(first).setText("Github:").setWidth(100);
-		new TextBox(first).setWidth(100).bindValueToProperty("github_user");
+		first.setLayout(new HorizontalLayout());
+		Panel second = new Panel(first);
+		second.setLayout(new ColumnLayout(2));
+		
+		new Label(second).setText("Legajo:").setWidth(100);
+		new TextBox(second).setWidth(100).bindValueToProperty("code");
+		new Label(second).setText("Nombre:").setWidth(100);
+		new TextBox(second).setWidth(100).bindValueToProperty("first_name");
+		new Label(second).setText("Apellido:").setWidth(100);
+		new TextBox(second).setWidth(100).bindValueToProperty("last_name");
+		new Label(second).setText("Github:").setWidth(100);
+		new TextBox(second).setWidth(100).bindValueToProperty("github_user");
 
-		this.createAssignmentGrid(mainPanel);
+		this.createAssignmentGrid(first);
 
-		NotitasService notitasService = NotitasServiceRest.getInstance(this.getModelObject().getToken());
+		NotitasService notitasService = NotitasServiceMock.getInstance(this.getModelObject().getToken());
 		List<Assignment> assignments = notitasService.getAssignments();
 		this.getModelObject().setAssignments(assignments);
 
@@ -47,15 +52,23 @@ public class StudentWindow extends Dialog<Student> {
 	private void describeAssignmentGrid(Table<Assignment> table) {
 		Column<Assignment> columnaID = new Column<Assignment>(table);
 		columnaID.setTitle("ID");
+		columnaID.setFixedSize(30);
 		columnaID.bindContentsToProperty("id");
 
 		Column<Assignment> columnaTitle = new Column<Assignment>(table);
 		columnaTitle.setTitle("Titulo");
+		columnaTitle.setFixedSize(100);
 		columnaTitle.bindContentsToProperty("title");
 
 		Column<Assignment> columnaDescription = new Column<Assignment>(table);
 		columnaDescription.setTitle("Description");
+		columnaDescription.setFixedSize(100);
 		columnaDescription.bindContentsToProperty("description");
+
+		Column<Assignment> columnaNotas = new Column<Assignment>(table);
+		columnaNotas.setTitle("Notas");
+		columnaNotas.setFixedSize(100);
+		columnaNotas.bindContentsToProperty("grades");
 
 	}
 
@@ -65,6 +78,20 @@ public class StudentWindow extends Dialog<Student> {
 		table.setWidth(600);
 		table.bindItemsToProperty("assignments");
 		this.describeAssignmentGrid(table);
+	}
+	
+	public void update(){
+		Dialog<?> dialog = new UpdateStudentWindow(this, this.getModelObject());
+		dialog.open();
+		dialog.onAccept(() -> {
+		});
+	}
+	
+
+	@Override
+	protected void addActions(Panel panel) {
+		new Button(panel).setCaption("Actualizar").onClick(this::update);
+		new Button(panel).setCaption("Salir").onClick(this::cancel);
 	}
 
 }

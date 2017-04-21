@@ -15,8 +15,8 @@ public class Assignment {
 	private String title;
 	@JsonProperty("description")
 	private String description;
-//	@JsonProperty("grades")
-//	private List<Grade> grades;
+	@JsonProperty("grades")
+	private List<Grade> grades;
 	
 	public int getId() {
 		return id;
@@ -36,12 +36,12 @@ public class Assignment {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-//	public List<Grade> getGrades() {
-//		return grades;
-//	}
-//	public void setGrades(List<Grade> grades) {
-//		this.grades = grades;
-//	}
+	public List<Grade> getGrades() {
+		return grades;
+	}
+	public void setGrades(List<Grade> grades) {
+		this.grades = grades;
+	}
 	
 	
 
