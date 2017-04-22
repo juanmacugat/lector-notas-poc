@@ -9,6 +9,7 @@ import dds.utn.frba.utils.JsonFactory;
 public class NotitasServiceMock implements NotitasService{
 	
 	private String token;
+	private String student = "{\"code\":\"111222333\",\"first_name\":\"fasdd\",\"last_name\":\"Fulanito\",\"github_user\":\"fulanoDeTal\"}";
 	
 	public static NotitasServiceMock getInstance(String token){
 		return new NotitasServiceMock(token);
@@ -20,7 +21,6 @@ public class NotitasServiceMock implements NotitasService{
 
 	@Override
 	public Student getStudent() {
-		String student = "{\"code\":\"111222333\",\"first_name\":\"fasdd\",\"last_name\":\"Fulanito\",\"github_user\":\"fulanoDeTal\"}";
 		JsonFactory jsonFactory = new JsonFactory();
 		return jsonFactory.fromJson(student, Student.class);
 	}
@@ -34,7 +34,8 @@ public class NotitasServiceMock implements NotitasService{
 
 	@Override
 	public void updateStudent(Student student) {
-		
+		String newStudent = "{\"code\":\""+ student.getCode() + "\",\"first_name\":\""+ student.getFirst_name() + "\",\"last_name\":\""+ student.getLast_name() + "\",\"github_user\":\""+ student.getGithub_user() + "\"}";
+		this.student = newStudent;
 	}
 
 }

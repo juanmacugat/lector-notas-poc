@@ -48,8 +48,11 @@ public class NotitasServiceRest implements NotitasService {
 
 	@Override
 	public void updateStudent(Student student) {
-		// TODO Auto-generated method stub
+		JsonFactory jsonFactory = new JsonFactory();
+		String newStudent = jsonFactory.toJson(student);
 
+		Client.create().resource(NOTITAS_API).path("student").header("Authorization", "Bearer " + token)
+				.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).put(ClientResponse.class, newStudent);
 	}
 
 }

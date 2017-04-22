@@ -17,6 +17,7 @@ import dds.utn.frba.model.Assignment;
 import dds.utn.frba.model.Student;
 import dds.utn.frba.service.NotitasService;
 import dds.utn.frba.service.NotitasServiceMock;
+import dds.utn.frba.service.NotitasServiceRest;
 
 public class StudentWindow extends Dialog<Student> {
 
@@ -33,17 +34,19 @@ public class StudentWindow extends Dialog<Student> {
 		second.setLayout(new ColumnLayout(2));
 		
 		new Label(second).setText("Legajo:").setWidth(100);
-		new TextBox(second).setWidth(100).bindValueToProperty("code");
+		new Label(second).setWidth(100).bindValueToProperty("code");
 		new Label(second).setText("Nombre:").setWidth(100);
-		new TextBox(second).setWidth(100).bindValueToProperty("first_name");
+		new Label(second).setWidth(100).bindValueToProperty("first_name");
 		new Label(second).setText("Apellido:").setWidth(100);
-		new TextBox(second).setWidth(100).bindValueToProperty("last_name");
+		new Label(second).setWidth(100).bindValueToProperty("last_name");
 		new Label(second).setText("Github:").setWidth(100);
-		new TextBox(second).setWidth(100).bindValueToProperty("github_user");
+		new Label(second).setWidth(100).bindValueToProperty("github_user");
 
 		this.createAssignmentGrid(first);
 
-		NotitasService notitasService = NotitasServiceMock.getInstance(this.getModelObject().getToken());
+		String token = this.getModelObject().getToken();
+		NotitasService notitasService = NotitasServiceRest.getInstance(token);
+		
 		List<Assignment> assignments = notitasService.getAssignments();
 		this.getModelObject().setAssignments(assignments);
 
@@ -80,13 +83,12 @@ public class StudentWindow extends Dialog<Student> {
 		this.describeAssignmentGrid(table);
 	}
 	
-	public void update(){
+	protected void update(){
 		Dialog<?> dialog = new UpdateStudentWindow(this, this.getModelObject());
 		dialog.open();
 		dialog.onAccept(() -> {
 		});
 	}
-	
 
 	@Override
 	protected void addActions(Panel panel) {

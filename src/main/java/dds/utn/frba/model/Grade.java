@@ -57,6 +57,10 @@ public class Grade {
 		this.updated_at = updated_at;
 	}
 	
+	@Override
+	public String toString(){
+		return String.valueOf(value);
+	}
 	
 	
 	

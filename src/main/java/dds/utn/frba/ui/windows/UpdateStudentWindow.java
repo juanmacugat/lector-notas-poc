@@ -9,6 +9,9 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
 import dds.utn.frba.model.Student;
+import dds.utn.frba.service.NotitasService;
+import dds.utn.frba.service.NotitasServiceMock;
+import dds.utn.frba.service.NotitasServiceRest;
 
 public class UpdateStudentWindow extends Dialog<Student>{
 
@@ -34,9 +37,14 @@ public class UpdateStudentWindow extends Dialog<Student>{
 	
 	@Override
 	protected void addActions(Panel panel) {
-		new Button(panel).setCaption("Actualizar").onClick(this::accept);
+		new Button(panel).setCaption("Actualizar").onClick(this::updateStudent);
 		new Button(panel).setCaption("Salir").onClick(this::cancel);
 	}
 
-
+	protected void updateStudent(){
+		String token = this.getModelObject().getToken();
+		NotitasService notitasService = NotitasServiceRest.getInstance(token);
+		notitasService.updateStudent(this.getModelObject());		
+		this.close();
+	}
 }

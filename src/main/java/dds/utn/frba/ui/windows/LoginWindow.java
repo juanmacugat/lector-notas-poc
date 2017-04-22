@@ -12,6 +12,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import dds.utn.frba.model.Student;
 import dds.utn.frba.service.NotitasService;
 import dds.utn.frba.service.NotitasServiceMock;
+import dds.utn.frba.service.NotitasServiceRest;
 import dds.utn.frba.ui.vm.Token;
 
 public class LoginWindow extends SimpleWindow<Token> {
@@ -22,7 +23,7 @@ public class LoginWindow extends SimpleWindow<Token> {
 
 	public void authenticate() {
 		String token = this.getModelObject().getToken();
-		NotitasService notitasService = NotitasServiceMock.getInstance(token);
+		NotitasService notitasService = NotitasServiceRest.getInstance(token);
 		Student student = notitasService.getStudent();
 		student.setToken(token);
 
