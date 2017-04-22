@@ -10,27 +10,15 @@ import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
 import dds.utn.frba.model.Student;
+import dds.utn.frba.model.Token;
 import dds.utn.frba.service.NotitasService;
-import dds.utn.frba.service.NotitasServiceMock;
 import dds.utn.frba.service.NotitasServiceRest;
-import dds.utn.frba.ui.vm.Token;
+import dds.utn.frba.utils.NotitasServiceMock;
 
 public class LoginWindow extends SimpleWindow<Token> {
 
 	public LoginWindow(WindowOwner owner) {
 		super(owner, new Token());
-	}
-
-	public void authenticate() {
-		String token = this.getModelObject().getToken();
-		NotitasService notitasService = NotitasServiceRest.getInstance(token);
-		Student student = notitasService.getStudent();
-		student.setToken(token);
-
-		Dialog<?> dialog = new StudentWindow(this, student);
-		dialog.open();
-		dialog.onAccept(() -> {
-		});
 	}
 
 	@Override
@@ -51,5 +39,18 @@ public class LoginWindow extends SimpleWindow<Token> {
 		new Label(mainPanel).setText("Ingrese el token");
 		new TextBox(mainPanel).setWidth(600).bindValueToProperty("token");
 	}
+	
+	protected void authenticate() {
+		String token = this.getModelObject().getToken();
+		NotitasService notitasService = NotitasServiceRest.getInstance(token);
+		Student student = notitasService.getStudent();
+		student.setToken(token);
+
+		Dialog<?> dialog = new StudentWindow(this, student);
+		dialog.open();
+		dialog.onAccept(() -> {
+		});
+	}
+
 
 }
